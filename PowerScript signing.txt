@@ -1,0 +1,8 @@
+1) Run PowerShell as administrator
+2) New-SelfSignedCertificate –DnsName <Computer name> -CertStoreLocation “cert:\LocalMachine\My” -Type Codesigning
+3) certmgr.msc --> Personal certificates --> Double click on certificate --> details --> copy to file wiyard (no export private key, DER encoded binary)
+3a) Trusted Root Certification Authorities -->rightr click --> Import...
+4) Set-AuthenticodeSignature -FilePath C:\Temp\script1.ps1 -Certificate (Get-ChildItem -Path Cert:\CurrentUser\My\ -CodeSigningCert)
+5  To sign script: $cert = @(Get-ChildItem cert:\CurrentUser\My -codesigning)[0] Set-AuthenticodeSignature <your_file>.ps1 $cert
+
+
